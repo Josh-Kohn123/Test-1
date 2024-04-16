@@ -20,7 +20,7 @@ def calculate_avg_sentence_length(text):
 
 # Function to transcribe audio using Google Speech Recognition
 def transcribe_audio(audio_file):
-    import speech_recognition as sr 
+    #import speech_recognition as sr 
     recognizer = sr.Recognizer()    
     with sr.WavFile(audio_file) as source:
         audio_data = recognizer.record(source)#, duration = 30, offset= 0)
@@ -31,13 +31,12 @@ def transcribe_audio(audio_file):
         print("Google Speech Recognition could not understand the audio.")
     except sr.RequestError as e:
         print(f"Could not request results from Google Speech Recognition service; {e}")
-#transcribe_audio("/Users/joshuakohn/Documents/GitHub/Test-1/Sample2.wav")
 
-
-# Example usage
+#Example usage
 if __name__ == "__main__":
-    audio_file_path = "/Users/joshuakohn/Documents/GitHub/Test-1/Sample2.wav"  ##Insert Audio File Path as .wav
+    audio_file_path = "/Users/joshuakohn/Documents/GitHub/Test-1/Sample3.wav"  ##Insert Audio File Path as .wav
     transcribed_text = transcribe_audio(audio_file_path)
+    print(transcribed_text)
     if transcribed_text:
         avg_sentence_length = calculate_avg_sentence_length(transcribed_text)
         print(f"Average sentence length: {avg_sentence_length} words per sentence")
