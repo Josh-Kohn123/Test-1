@@ -1,6 +1,7 @@
 import speech_recognition as sr 
 import re
 import os #Can remove if not working with OS
+import deepmultilingualpunctuation as pm
 
 # Function to calculate average sentence length
 def calculate_avg_sentence_length(text):
@@ -21,11 +22,13 @@ def calculate_avg_sentence_length(text):
 # Function to transcribe audio using Google Speech Recognition
 def transcribe_audio(audio_file):
     #import speech_recognition as sr 
-    recognizer = sr.Recognizer()    
+    recognizer = sr.Recognizer() 
+    punctuator = pm.PunctuationModel() 
     with sr.WavFile(audio_file) as source:
         audio_data = recognizer.record(source)#, duration = 30, offset= 0)
     try:
         text = recognizer.recognize_google(audio_data)
+        text = punctuator.restore_punctuation(text)
         return text
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand the audio.")
@@ -34,7 +37,9 @@ def transcribe_audio(audio_file):
 
 #Example usage
 if __name__ == "__main__":
-    audio_file_path = "/Users/joshuakohn/Documents/GitHub/Test-1/Sample3.wav"  ##Insert Audio File Path as .wav
+
+    sample_number = input("enter a number 2-4")
+    audio_file_path = "/Users/joshuakohn/Documents/GitHub/Test-1/Sample" + str(sample_number) + ".wav"  ##Insert Audio File Path as .wav
     transcribed_text = transcribe_audio(audio_file_path)
     print(transcribed_text)
     if transcribed_text:
